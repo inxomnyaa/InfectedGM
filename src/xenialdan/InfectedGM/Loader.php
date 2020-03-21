@@ -90,7 +90,15 @@ class Loader extends Game
      */
     public function startArena(Arena $arena): void
     {
-        Loader::getInstance()->getServer()->broadcastMessage(TextFormat::GRAY."Turn on sounds for better experience",$arena->getPlayers());
+        Loader::getInstance()->getServer()->broadcastMessage(TextFormat::GRAY . "Turn on sounds for better experience", $arena->getPlayers());
+        $spk = new PlaySoundPacket();
+        $spawn = $arena->getLevel()->getSafeSpawn();
+        [$spk->x, $spk->y, $spk->z] = [$spawn->x, $spawn->y, $spawn->z];
+        $spk->volume = 0.5;
+        $spk->soundName = "record.13";
+        $spk->pitch = 1.0;
+        $arena->getLevel()->broadcastGlobalPacket($spk);
+
         $teamPlayers = $arena->getTeamByName(self::TEAM_PLAYERS);
         if (count($arena->getTeamByName(self::TEAM_INFECTED)->getPlayers()) < 1) {
             $arena->joinTeam($teamPlayers->getPlayers()[array_rand($teamPlayers->getPlayers())], self::TEAM_INFECTED);
@@ -166,7 +174,7 @@ class Loader extends Game
             $spk->pitch = 0.7;
             $player->dataPacket($spk);
         }
-        if(count(($arena = API::getArenaOfPlayer($player))->getTeamByName(self::TEAM_PLAYERS)->getPlayers()) < 1){
+        if (count(($arena = API::getArenaOfPlayer($player))->getTeamByName(self::TEAM_PLAYERS)->getPlayers()) < 1) {
             $ev = new WinEvent($this, $arena, $arena->getTeamByName(self::TEAM_INFECTED));
             $ev->call();
             $ev->announce();

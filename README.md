@@ -1,7 +1,15 @@
 # InfectedGM
 InfectedGM for [PMMP](https://github.com/pmmp/PocketMine-MP) using [gameapi](https://github.com/thebigsmileXD/gameapi)
+
+A virus is spreading. Try not to get infected! Run for your life!
 ## Download
 Grab a phar from [Poggit](https://poggit.pmmp.io/ci/thebigsmileXD/InfectedGM)
+## Gameplay
+- At start, a random player is chosen to be the first infected person
+- Infected players have to haunt down other players
+- When all players got infected, the game ends
+- To make locating players and infected players easier, ambient sounds randomly play.
+Infected players have a zombie skin (can be modified, change the infected_skin.png file under the plugin data)
 ## Setup
 **Please use the plugin on a seperate server to your main server (lobby etc)** This is because the plugin modifies gameplay alot. You can use the `/transferserver` command to send players to the server.
 
