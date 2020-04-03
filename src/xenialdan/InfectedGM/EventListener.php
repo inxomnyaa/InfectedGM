@@ -2,16 +2,12 @@
 
 namespace xenialdan\InfectedGM;
 
-use pocketmine\entity\Effect;
-use pocketmine\entity\EffectInstance;
 use pocketmine\event\entity\EntityDamageByEntityEvent;
 use pocketmine\event\Listener;
-use pocketmine\level\sound\GenericSound;
-use pocketmine\network\mcpe\protocol\PlaySoundPacket;
 use pocketmine\Player;
-use pocketmine\utils\TextFormat;
 use xenialdan\gameapi\API;
 use xenialdan\gameapi\Arena;
+use xenialdan\gameapi\event\WinEvent;
 
 /**
  * Class EventListener
@@ -29,9 +25,16 @@ class EventListener implements Listener
             $arena = API::getArenaByLevel(Loader::getInstance(), $player->getLevel());
             if ($arena->getState() !== Arena::INGAME) return;
             $ev->setCancelled();
-            if(!API::getTeamOfPlayer($hitter)->getName() === Loader::TEAM_INFECTED) return;
-            if(!API::getTeamOfPlayer($player)->getName() === Loader::TEAM_PLAYERS) return;
-            $arena->joinTeam($player,Loader::TEAM_INFECTED);
+            $teamInfected = API::getTeamOfPlayer($hitter);
+            if (!$teamInfected->getName() === Loader::TEAM_INFECTED) return;
+            if (!API::getTeamOfPlayer($player)->getName() === Loader::TEAM_PLAYERS) return;
+            $arena->joinTeam($player, Loader::TEAM_INFECTED);
+            if (count($teamInfected->getPlayers()) === 0) {
+                $ev = new WinEvent($arena->getOwningGame(), $arena, $teamInfected);
+                $ev->call();
+                $ev->announce();
+                API::resetArena($arena);
+            }
         }
     }
 }

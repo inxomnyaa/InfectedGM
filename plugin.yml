@@ -1,7 +1,7 @@
 ---
 name: InfectedGM
 main: xenialdan\InfectedGM\Loader
-version: 0.0.0
+version: 0.1.0
 api: ['3.11']
 softdepend:
 - DEVirion
