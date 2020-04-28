@@ -91,7 +91,7 @@ class Loader extends Game
      */
     public function startArena(Arena $arena): void
     {
-        Loader::getInstance()->getServer()->broadcastMessage(TextFormat::GRAY . "Turn on sounds for better experience", $arena->getPlayers());
+        self::getInstance()->getServer()->broadcastMessage(TextFormat::GRAY . "Turn on sounds for better experience", $arena->getPlayers());
         $spk = new PlaySoundPacket();
         $spawn = $arena->getLevel()->getSafeSpawn();
         [$spk->x, $spk->y, $spk->z] = [$spawn->x, $spawn->y, $spawn->z];
@@ -101,9 +101,13 @@ class Loader extends Game
         $arena->getLevel()->broadcastGlobalPacket($spk);
         $startTime = time();
 
+        //boss bar update + infect random player if infected players is empty - can happen when all infected players disconnected
         $this->getScheduler()->scheduleDelayedRepeatingTask(new ClosureTask(function (int $currentTick) use ($arena, $startTime): void {
+            if ($arena->state !== Arena::INGAME) {
+                return;//TODO figure out how to cancel this task
+            }
             $teamPlayers = $arena->getTeamByName(self::TEAM_PLAYERS);
-            if (count($arena->getTeamByName(self::TEAM_INFECTED)->getPlayers()) < 1) {
+            if (count($teamPlayers->getPlayers()) >= 1 && count($arena->getTeamByName(self::TEAM_INFECTED)->getPlayers()) < 1) {
                 $arena->joinTeam($teamPlayers->getPlayers()[array_rand($teamPlayers->getPlayers())], self::TEAM_INFECTED);
             }
             if ((time() - $startTime) > self::ROUNDTIME) {
@@ -115,6 +119,7 @@ class Loader extends Game
                 $arena->bossbar->setSubTitle()->setTitle(count($teamPlayers->getPlayers()) . ' players alive')->setPercentage(1);
             }
         }), 20, 20);
+        //Random sounds
         $this->getScheduler()->scheduleDelayedRepeatingTask(new ClosureTask(function (int $currentTick) use ($arena): void {
             foreach ($arena->getPlayers() as $player) {
                 if (mt_rand(0, 30) > 1) continue;

@@ -1,11 +1,11 @@
 ---
 name: InfectedGM
 main: xenialdan\InfectedGM\Loader
-version: 0.1.1
-api: ['3.11']
+version: 0.1.2
+api: ['3.11','3.12']
 softdepend:
-- DEVirion
-- gamereward
+  - DEVirion
+  - gamereward
 author: XenialDan
 prefix: '[InfectedGM]'
 permissions:

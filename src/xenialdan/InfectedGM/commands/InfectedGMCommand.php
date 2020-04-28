@@ -94,6 +94,10 @@ class InfectedGMCommand extends PluginCommand
                         return true;
                     }
                     $arena = API::getArenaOfPlayer($sender);
+                    if (count($arena->getPlayers()) < 2) {
+                        $sender->sendMessage(TextFormat::RED . "Forcestart requires at least 2 players");
+                        return true;
+                    }
                     if ($arena === null || !API::isArenaOf($this->getPlugin(), $arena->getLevel())) {
                         /** @var Game $plugin */
                         $plugin = $this->getPlugin();
