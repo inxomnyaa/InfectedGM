@@ -21,7 +21,7 @@ class EventListener implements Listener
     {
         if ($ev->getCause() !== EntityDamageByEntityEvent::CAUSE_ENTITY_ATTACK) return;
         if (!($player = $ev->getEntity()) && !($hitter = $ev->getDamager() instanceof Player)) return;
-        if (API::isArenaOf(Loader::getInstance(), $player->getLevel()) && API::isPlaying($player, Loader::getInstance())) {
+        if (API::isPlaying($player, Loader::getInstance()) && API::isArenaOf(Loader::getInstance(), $player->getLevel())) {
             $arena = API::getArenaByLevel(Loader::getInstance(), $player->getLevel());
             if ($arena->getState() !== Arena::INGAME) return;
             $ev->setCancelled();

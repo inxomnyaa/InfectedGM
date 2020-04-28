@@ -32,9 +32,9 @@ class LeaveGameListener implements Listener
     {
         if ($ev->getCause() !== EntityDamageEvent::CAUSE_VOID) return;
         if (!($player = $ev->getEntity()) instanceof Player) return;
-        if (API::isArenaOf(Loader::getInstance(), $player->getLevel()) && API::isPlaying($player, Loader::getInstance())) {
+        if (API::isPlaying($player, Loader::getInstance()) && API::isArenaOf(Loader::getInstance(), $player->getLevel())) {
             $arena = API::getArenaByLevel(Loader::getInstance(), $player->getLevel());
-            if($arena->getState() !== Arena::INGAME) return;
+            if ($arena->getState() !== Arena::INGAME) return;
             $ev->setCancelled();
             /** @var Player $player */
             $player->getServer()->broadcastMessage(TextFormat::RED . $player->getDisplayName() . " fell into the void!");

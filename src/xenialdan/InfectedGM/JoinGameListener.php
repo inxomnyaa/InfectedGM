@@ -33,7 +33,7 @@ class JoinGameListener implements Listener
         /** @var PlayerInteractEvent $event */
         if (strpos(strtolower(TextFormat::clean($text[0])), strtolower(TextFormat::clean(Loader::getInstance()->getPrefix()))) !== false) {
             $player = $event->getPlayer();
-            if (is_null($arena = Loader::getInstance()->getArenas()[TextFormat::clean($text[1])] ?? null)) {
+            if (($arena = Loader::getInstance()->getArenas()[TextFormat::clean($text[1])] ?? null) === null) {
                 $player->sendMessage(TextFormat::RED . 'Arena not found');
                 return;
             }

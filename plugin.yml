@@ -1,7 +1,7 @@
 ---
 name: InfectedGM
 main: xenialdan\InfectedGM\Loader
-version: 0.1.0
+version: 0.1.1
 api: ['3.11']
 softdepend:
 - DEVirion
@@ -9,22 +9,22 @@ softdepend:
 author: XenialDan
 prefix: '[InfectedGM]'
 permissions:
-  infectedGM.command:
+  infectedgm.command:
     description: Base perm for InfectedGM commands
     default: true
     children:
-      infectedGM.command.leave:
+      infectedgm.command.leave:
         default: true
-      infectedGM.command.forcestart:
+      infectedgm.command.forcestart:
         default: op
-      infectedGM.command.stop:
+      infectedgm.command.stop:
         default: op
-      infectedGM.command.endsetup:
+      infectedgm.command.endsetup:
         default: op
-      infectedGM.command.setup:
+      infectedgm.command.setup:
         default: op
-      infectedGM.command.info:
+      infectedgm.command.info:
         default: true
-      infectedGM.command.status:
+      infectedgm.command.status:
         default: op
 ...
