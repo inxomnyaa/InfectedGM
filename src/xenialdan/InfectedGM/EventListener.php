@@ -20,10 +20,12 @@ class EventListener implements Listener
     public function onHitPlayer(EntityDamageByEntityEvent $ev)
     {
         if ($ev->getCause() !== EntityDamageByEntityEvent::CAUSE_ENTITY_ATTACK) return;
-        if (!($player = $ev->getEntity()) && !($hitter = $ev->getDamager() instanceof Player)) return;
+        $player = $ev->getEntity();
+        $hitter = $ev->getDamager();
+        if (!$player instanceof Player && !$hitter instanceof Player) return;
         if (API::isPlaying($player, Loader::getInstance()) && API::isArenaOf(Loader::getInstance(), $player->getLevel())) {
             $arena = API::getArenaByLevel(Loader::getInstance(), $player->getLevel());
-            if ($arena->getState() !== Arena::INGAME) return;
+            if ($arena === null || $arena->getState() !== Arena::INGAME) return;
             $ev->setCancelled();
             $teamInfected = API::getTeamOfPlayer($hitter);
             if (!$teamInfected->getName() === Loader::TEAM_INFECTED) return;
