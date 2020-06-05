@@ -5,6 +5,7 @@ A virus is spreading. Try not to get infected! Run for your life!
 ## Download
 Grab a phar from [Poggit](https://poggit.pmmp.io/ci/thebigsmileXD/InfectedGM)
 ## Gameplay
+- **Inspired by Hypixel, you can read the gameplay here: https://hypixel.net/threads/new-gamemode-minecraft-infected.334387/**
 - At start, a random player is chosen to be the first infected person
 - Infected players have to haunt down other players
 - When all players got infected, the game ends
